@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .flex {
+      display: flex;
+    }
+
+    label {
+      margin: 20px;
+    }
+
+    .answer {
+      color: white;
+    }
+
+    .button2 {
+      display: none;
+    }
+
+    .center {
+      max-width: 80vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="center">
+    <h1>Number Guessing Game</h1>
+
+    <p>We have selected a random number between 1 and 100. See if you can guess it in 10 turns or fewer. We'll tell you
+      if
+      your guess was too high or too low.</p>
+
+    <label>Enter a guess: <input type="number"> <button class="button1">Submit guess</button></label>
+    <div class="flex">
+      <p class="guess"></p>
+      <p class="previous"></p>
+    </div>
+    <p class="answer"></p>
+    <p class="hint"></p>
+    <button class="button2">Start new game</button>
+  </div>
+
+  <script>
+    let random = Math.floor(Math.random() * 100);
+    const button1 = document.querySelector('.button1');
+    const button2 = document.querySelector('.button2');
+    const answer = document.querySelector('.answer');
+    const previous = document.querySelector('.previous');
+    const guess = document.querySelector('.guess');
+    const hint = document.querySelector('.hint');
+    let count = 0;
+
+    button1.addEventListener('click', () => {
+      let input = document.querySelector('input').value;
+      count += 1;
+      if (count == 10) {
+        answer.textContent = "!!!GAME OVER!!!";
+        answer.style.background = 'red';
+        answer.style.padding = '4px'
+        hint.textContent = "";
+        button2.style.display = 'block';
+        button1.disabled = true;
+      } else if (input == random) {
+        answer.textContent = "Congratulations! You got it right!";
+        answer.style.background = 'green';
+        answer.style.padding = '4px'
+        hint.textContent = "";
+        button2.style.display = 'block';
+        button1.disabled = true;
+      } else if (input < random) {
+        hint.textContent = "Last guess was too low!";
+        answer.textContent = "Wrong!";
+        answer.style.background = 'red';
+        answer.style.padding = '4px'
+      } else if (input > random) {
+        hint.textContent = "Last guess was too high!"
+        answer.textContent = "Wrong!";
+        answer.style.background = 'red';
+        answer.style.padding = '4px'
+      }
+
+      guess.textContent = "Previous guesses: ";
+      previous.appendChild(document.createTextNode(input + ' '));
+
+      button2.addEventListener('click', () => { location.reload() });
+
+    });
+  </script>
+</body>
+
+</html>
