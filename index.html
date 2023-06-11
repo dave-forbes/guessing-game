@@ -9,22 +9,27 @@
   <style>
     .flex {
       display: flex;
+      /* aligning the label, input and submit button on same line */
     }
 
     label {
       margin: 20px;
+      /* adding some space around the label */
     }
 
     .answer {
       color: white;
+      /* to make answer more legible since it has either red or green background */
     }
 
     .button2 {
       display: none;
+      /* this button is to restart the game, it is only changed to become visible when you have guessed 10 times incorrectly */
     }
 
     .center {
       max-width: 80vw;
+      /* aligning all the elements on the page so they are centred and look better on smaller screens */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -35,6 +40,7 @@
     body {
       display: flex;
       justify-content: center;
+      /* centering the main content of the page */
       min-height: 100vh;
     }
   </style>
@@ -59,31 +65,31 @@
   </div>
 
   <script>
-    let random = Math.floor(Math.random() * 100);
+    let random = Math.floor(Math.random() * 100); /* everytime page is loaded, a random number is created between 1 and 100 */
     const button1 = document.querySelector('.button1');
     const button2 = document.querySelector('.button2');
     const answer = document.querySelector('.answer');
-    const previous = document.querySelector('.previous');
+    const previous = document.querySelector('.previous'); /* defining variables to be used in the functions below */
     const guess = document.querySelector('.guess');
     const hint = document.querySelector('.hint');
     let count = 0;
 
     button1.addEventListener('click', () => {
       let input = document.querySelector('input').value;
-      count += 1;
+      count += 1;                                         /* counting how many attempts have been made */
       if (count == 10) {
         answer.textContent = "!!!GAME OVER!!!";
         answer.style.background = 'red';
         answer.style.padding = '4px'
         hint.textContent = "";
-        button2.style.display = 'block';
-        button1.disabled = true;
+        button2.style.display = 'block';                    /* make start new game visible */
+        button1.disabled = true;                            /* stop them entering more attempts after game over */
       } else if (input == random) {
         answer.textContent = "Congratulations! You got it right!";
         answer.style.background = 'green';
         answer.style.padding = '4px'
-        hint.textContent = "";
-        button2.style.display = 'block';
+        hint.textContent = "";                                  /* checking if you guess correct or incorrect or you've exceeded max attempts */
+        button2.style.display = 'block';                        /* outputing results to html elements */
         button1.disabled = true;
       } else if (input < random) {
         hint.textContent = "Last guess was too low!";
@@ -97,10 +103,10 @@
         answer.style.padding = '4px'
       }
 
-      guess.textContent = "Previous guesses: ";
-      previous.appendChild(document.createTextNode(input + ' '));
+      guess.textContent = "Previous guesses: ";                 /* text only to appear after made first attempt */
+      previous.appendChild(document.createTextNode(input + ' ')); /* add previous attempts */
 
-      button2.addEventListener('click', () => { location.reload() });
+      button2.addEventListener('click', () => { location.reload() });  /* reload page after start again button pressed */
 
     });
   </script>
